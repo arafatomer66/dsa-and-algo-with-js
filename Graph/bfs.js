@@ -1,5 +1,5 @@
 function bfs(graph, start) {
-        const q = [start];
+        const q = [start]; // queue
         const visited = new  Set();
 
 
