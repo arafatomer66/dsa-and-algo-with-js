@@ -3,31 +3,34 @@
  * @return {number}
  */
 var minOperations = function(nums) {
-    var uniqueNums = [...new Set(nums)];
+    // Remove duplicates to consider unique elements
+    nums = [...new Set(nums)];
     
     // Sort the array
-    var sortedNums = uniqueNums.sort((a, b) => a - b);
-    var initial = sortedNums[0];
-    var count = 0;
-
-
-    console.log(sortedNums);
-
-    for (var i = 0; i < sortedNums.length; i++) {
-        console.log("initial", initial)
-        console.log("nums[i]" , sortedNums[i])
-        if (sortedNums[i] != initial ) {
-            count++;
-            initial = sortedNums[i] + 1
-        } else {
-            initial++;
-        }
-            
-    }
+    nums.sort((a, b) => a - b);
     
-    console.log(count);
+    let n = nums.length;
+    let maxLength = 0;
+    
+    // Sliding window approach to find the largest consecutive subsequence
+    for (let i = 0; i < n; i++) {
+        let j = i;
+        
+        // Expand the window while the difference between elements is valid (<= n-1)
+        while (j < n && nums[j] - nums[i] <= n - 1) {
+            j++;
+        }
+        
+        // Update the maxLength of consecutive numbers
+        maxLength = Math.max(maxLength, j - i);
+    }
 
-    return count;
+    // The result is the total length minus the largest consecutive subsequence length
+    return n - maxLength;
 };
 
-minOperations([8,5,9,9,8,4]);
+// Example Usage
+console.log(minOperations([8, 5, 9, 9, 8, 4])); // Output: 2
+
+
+minOperations([1,2,3,5,6]);
